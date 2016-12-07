@@ -1,0 +1,73 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+     classpath "se.transmode.gradle:gradle-docker:1.2"
+  }
+}
+
+apply plugin: 'application'
+apply plugin: 'docker'
+ 
+    
+repositories {
+    mavenCentral()
+}
+
+mainClassName = 'kafka.MyProducer'
+                           
+dependencies {
+    compile group: 'org.apache.kafka', name: 'kafka_2.11', version: '0.10.0.0'    
+}
+
+task copyConf(type: Copy) {
+    from System.getProperty('user.dir') + "/conf"
+    into "$buildDir/conf"
+}
+task copyData(type: Copy){
+	from System.getProperty('user.dir') + "/data"
+    into "$buildDir/data"
+}
+
+task createConf {
+    def conf = file("$buildDir/conf")
+    outputs.dir conf    
+    doLast {
+        conf.mkdirs()
+        copyConf.execute()
+    }
+}
+
+task createData{
+	def data=file("$buildDir/data")
+    outputs.dir data
+     doLast {
+        data.mkdirs()
+        copyData.execute()
+    }
+}
+
+distributions {
+    main {
+        contents {
+            from(createConf) { into "/conf" }
+            from(createData) { into "/data" }
+        }
+    }
+}
+
+docker {
+    baseImage = 'brscrt/java-8'
+    maintainer = 'Baris Cirit "brscrt@gmail.com"'
+}
+
+distDocker {
+    tag = 'brscrt/kafkaproducer'
+      version = 'latest'
+    
+    push = project.hasProperty('push') ? project.property('push') : false
+} 
+
+
+task wrapper(type: Wrapper) { gradleVersion = '2.14' }
