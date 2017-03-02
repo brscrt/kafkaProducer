@@ -44,8 +44,6 @@ By this way Kafka service was started and linked to the running zookeeper.
 
 ## Producer class
 ```java
-package kafka;
-
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -59,12 +57,12 @@ import util.MyProperties;
 public class MyProducer {
 
 	public static void main(String[] args) {
-		
+		System.out.println("It's started!");
 		MyProperties myProperties = new MyProperties();
-		myProperties.loadProperties("properties/myproducer.properties");
+		myProperties.loadProperties("conf/myproducer.properties");
 		Producer<String, String> producer = new KafkaProducer<>(myProperties);
 
-		Map<String, ArrayList<String>> map = MyCsv.readAndMap("data/bigdata.csv", 1);
+		Map<String, ArrayList<String>> map = MyCsv.readAndMap("data/data.csv", 1);
 
 		try {
 			map.forEach((key, value) -> {				
@@ -78,14 +76,14 @@ public class MyProducer {
 		} finally {
 			producer.close();
 		}
-
+		System.out.println("It's finished!");
 	}
 	
 }
 ```
 First it loads the properties file that we specify.
 ```java
-myProperties.loadProperties("properties/myproducer.properties");
+myProperties.loadProperties("conf/myproducer.properties");
 ```
 Then we create KafkaProducer object with myProperties.
 ```java
@@ -93,7 +91,7 @@ Producer<String, String> producer = new KafkaProducer<>(myProperties);
 ```
 Through MyCsv class, it reads the csv file and maps it as key and values.
 ```java
-Map<String, ArrayList<String>> map = MyCsv.readAndMap("data/bigdata.csv", 1);
+Map<String, ArrayList<String>> map = MyCsv.readAndMap("data/data.csv", 1);
 ```
 The second parameter "1", shows which column index will be key. For example:
 ```csv
