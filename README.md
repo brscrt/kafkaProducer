@@ -1,5 +1,6 @@
 # KafkaProducer
 This project reads sample data from a given .csv file, maps data with selected key and values and produces output via Apache Kafka.
+
 This project is a part of [this project](https://github.com/brscrt/Volume-Weighted-Average-Price).
 
 ## Add Apache Kafka library to project
