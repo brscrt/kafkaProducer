@@ -7,10 +7,9 @@ Apache Kafka library should be added as dependency.
 ```sh
 compile group: 'org.apache.kafka', name: 'kafka_2.11', version: '0.10.0.0' 
 ```
-and refresh gradle project
 
 ## Data file
-For sample input data, data.csv file was used.
+For sample input data, [data.csv](data/data.csv) file was used.
 
 ## Apache Kafka properties
 A config file must be defined to comminicate kafka service. In this project, myproperties.properties file was used as shown below.
@@ -29,14 +28,14 @@ value.serializer=org.apache.kafka.common.serialization.StringSerializer
 The kafka service running in docker was used in this project. Before run kafka, zookeper should be run. In this project, kafka and zookeeper images were pulled as shown below.
 
 #### Usage of zookeeper
-```sh
+```
 docker pull jplock/zookeeper
 docker run -d -p 2181:2181 --name zookeeper jplock/zookeeper
 ```
 Zookeeper was started as daemon (-d) and manually assigned port (-p) 2181:2181.
 
 #### Usage of kafka
-```sh
+```
 docker pull ches/kafka
 docker run -d --name kafka --link zookeeper:zookeeper ches/kafka
 ```
