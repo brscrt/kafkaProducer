@@ -12,6 +12,9 @@ compile group: 'org.apache.kafka', name: 'kafka_2.11', version: '0.10.0.0'
 ## Data file
 For sample input data, [data.csv](data/data.csv) file was used.
 
+## Dockerizing this project
+This project can be dockerized with this prepared [Dockerfile](Dockerfile). If you want to generate a Dockerfile by yourself, you can run distDocker gradle task that is situated in [build.gradle file](build.gradle).
+
 ## Apache Kafka properties
 A config file must be defined to comminicate kafka service. In this project, myproperties.properties file was used as shown below.
 
